@@ -31,8 +31,13 @@ for i in range(4):
     filename = "{}.png".format(os.getpid())
     cv2.imwrite(filename, gray)
 
-    text = pytesseract.image_to_string(Image.open(filename))
-    print("Text Extracted - {}: {}".format(i, text))
+    text = pytesseract.image_to_string(Image.open(filename), 'khm')
+    print("Text Extracted - {}: {}".format(i, text.encode("UTF-8")))
 
     os.remove(filename)
     strs[i] = text
+
+with open('data.txt', 'wb') as f:
+    for line in strs:
+        f.write(line.encode("UTF-8"))
+        f.write('\n')
